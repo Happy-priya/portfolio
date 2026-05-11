@@ -1,0 +1,123 @@
+body {
+    margin: 0;
+    font-family: 'Poppins', sans-serif;
+    background-color: #fff8f0;
+    color: #333;
+}
+
+.navbar {
+    background-color: #f6e8ea;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: irem 2rem;
+    box-shadow: 0 4px 8px ☐ rgba(0, 0, 0, 0.1);
+}
+
+.logo {
+    font-family: 'Cinzel Decorative', cursive;
+    font-size: 1.8rem;
+    color: #a66cff;
+}
+
+.nav-links {
+    list-style: none;
+    display: flex;
+    gap: 1.5rem;
+}
+
+.nav-links li a {
+    text-decoration: none;
+    color: #555;
+    font-weight: 500;
+}
+
+.hero {
+    background: linear-gradient(to right, #f6e8ea, #e5eaf5);
+    text-align: center;
+    padding: 4rem 2rem;
+}
+
+.hero h1 {
+    font-family: 'Cinzel Decorative', cursive;
+    font-size: 2.5rem;
+    color: #a66cff;
+}
+
+.hero p {
+    font-size: 1.2rem;
+    margin-top: 1rem;
+}
+
+h2 {
+    text-align: center;
+    color: #a66cff;
+    margin-top: 3rem;
+    font-family: 'Cinzel Decorative', cursive;
+}
+
+.product-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 2rem;
+    padding: 2em;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.product-card {
+    background-color:#ffffff;
+    border: 1px solid#f0d9ff;
+    border-radius: 12px;
+    padding: 1rem;
+    text-align: center;
+    box-shadow:0 4px 10px 0 rgba(0, 0, 0, 0.08);
+}
+
+
+.product-card img {
+    width: 100%;
+    border-radius: 8px;
+    height: 200px;
+    object-fit: cover;
+    }
+
+.product-card h3 {
+    margin: 0.8rem 0 0.3rem;
+    color: #5c5470;
+}
+
+.product-card p {
+    color: #8d7ca8;
+    margin-bottom: 0.8rem;
+}
+
+.product-card button {
+    background-color: #a66cff;
+    color: white;
+    border: none;
+    padding: 0.5rem 1rem;
+    border-radius: 20px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.product-card button:hover {
+    background-color:#8b4dff;
+}
+
+#about {
+    padding: 2rem;
+    max-width: 800px;
+    margin: auto;
+    text-align: center;
+}
+
+footer {
+    background-color:#f6e8ea;
+    text-align: center;
+    padding: 1rem;
+    font-size: 0.9rem;
+    color: #555;
+    margin-top: 3rem;
+}

@@ -1,0 +1,200 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Digital Wardrobe — Outfitly</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@700&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+  <style>
+    :root{
+      --bg:#f7fbfa;
+      --card:#ffffff;
+      --accent-1:#8ee3c9; /* mint */
+      --accent-2:#b59ce6; /* lavender */
+      --muted:#8a8a8a;
+      --shadow: 0 8px 24px rgba(20,20,40,0.06);
+      --glass: rgba(255,255,255,0.6);
+      font-family: 'Poppins', system-ui, sans-serif;
+    }
+    *{box-sizing:border-box}
+    body{margin:0;background:linear-gradient(180deg,var(--bg),#f1f6f7);color:#222}
+    header{display:flex;align-items:center;justify-content:space-between;padding:22px 28px}
+    .brand{display:flex;align-items:center;gap:14px}
+    .logo{width:56px;height:56px;border-radius:12px;background:linear-gradient(135deg,var(--accent-1),var(--accent-2));display:flex;align-items:center;justify-content:center;box-shadow:var(--shadow);color:white;font-weight:700;font-family:'Cinzel Decorative',serif;font-size:28px}
+    h1{font-size:20px;margin:0}
+    p.lead{margin:0;color:var(--muted);font-size:13px}
+    .container {
+      max-width: 1100px;
+      margin: 22px auto;
+      padding: 18px 0 18px 40px;
+      transform: translateX(-40px);
+    }
+    .panel:first-of-type {
+      transform: translateX(-30px);
+    }
+    .grid{display:grid;grid-template-columns:450px 1fr;gap:18px}
+    .panel{background:var(--card);border-radius:14px;padding:16px;box-shadow:var(--shadow)}
+    .upload-area{border:2px dashed rgba(0,0,0,0.06);padding:14px;border-radius:10px;background:linear-gradient(180deg,rgba(142,227,201,0.08),transparent)}
+    .controls{display:flex;gap:10px;margin-top:12px;align-items:center}
+    select,input[type=file]{padding:8px;border-radius:10px;border:1px solid rgba(0,0,0,0.06);background:transparent}
+    button{cursor:pointer;border:0;padding:10px 14px;border-radius:10px;background:linear-gradient(90deg,var(--accent-1),var(--accent-2));color:#fff;font-weight:600}
+    .small{font-size:13px;color:var(--muted);margin-top:8px}
+    .tabs{display:flex;gap:6px;margin:8px 0 14px}
+    .tab{padding:8px 12px;border-radius:999px;background:transparent;border:1px solid rgba(0,0,0,0.04);cursor:pointer}
+    .tab.active{background:linear-gradient(90deg,var(--accent-1),var(--accent-2));color:#fff}
+    .gallery{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+    .card{background:var(--glass);padding:8px;border-radius:10px;display:flex;align-items:center;justify-content:center;height:110px;overflow:hidden;position:relative}
+    .card img{max-width:100%;max-height:100%;object-fit:contain}
+    .meta{position:absolute;right:8px;top:8px;display:flex;gap:6px}
+    .icon{background:rgba(255,255,255,0.7);padding:6px;border-radius:8px;cursor:pointer}
+    .outfit-preview{display:flex;gap:10px;align-items:end;justify-content:center;padding:18px}
+    .outfit-preview .item{width:150px;height:160px;border-radius:12px;background:linear-gradient(180deg,rgba(255,255,255,0.7),transparent);display:flex;align-items:center;justify-content:center;box-shadow:var(--shadow);overflow:hidden}
+    .favorites{display:flex;gap:10px;flex-wrap:wrap}
+    .fav-chip{background:linear-gradient(90deg,var(--accent-2),var(--accent-1));color:white;padding:8px;border-radius:12px;font-weight:600}
+    footer{padding:18px;text-align:center;color:var(--muted);font-size:13px}
+    @media (max-width:900px){.grid{grid-template-columns:1fr;}.outfit-preview .item{width:110px;height:120px}}
+  </style>
+</head>
+<body>
+  <header>
+    <div class="brand">
+      <div class="logo">O</div>
+      <div>
+        <h1>Outfitly</h1>
+        <p class="lead">Your personal digital wardrobe — mix, match & save looks</p>
+      </div>
+    </div>
+    <div>
+      <button id="generateBtn">Generate Outfit</button>
+    </div>
+  </header>
+
+  <main class="container">
+    <div class="grid">
+      <section class="panel">
+        <h3>Add to Wardrobe</h3>
+        <div class="upload-area">
+          <label>Choose category</label>
+          <select id="categorySelect">
+            <option value="top">Top</option>
+            <option value="bottom">Bottom</option>
+            <option value="accessory">Accessory</option>
+            <option value="shoes">Shoes</option>
+          </select>
+          <div class="controls">
+            <input id="fileInput" type="file" accept="image/*">
+            <button id="addBtn">Add</button>
+          </div>
+          <p class="small">Tip: Upload clear outfit photos (white background works best). Stored locally on your browser.</p>
+        </div>
+
+        <hr>
+        <div>
+          <div class="tabs">
+            <div class="tab active" data-cat="all">All</div>
+            <div class="tab" data-cat="top">Tops</div>
+            <div class="tab" data-cat="bottom">Bottoms</div>
+            <div class="tab" data-cat="accessory">Accessories</div>
+            <div class="tab" data-cat="shoes">Shoes</div>
+          </div>
+          <div id="gallery" class="gallery"></div>
+        </div>
+      </section>
+
+      <section class="panel">
+        <h3>Outfit Lab</h3>
+        <div class="outfit-preview" id="preview">
+          <div class="item" data-slot="top"><span style="color:var(--muted)">Top</span></div>
+          <div class="item" data-slot="bottom"><span style="color:var(--muted)">Bottom</span></div>
+          <div class="item" data-slot="accessory"><span style="color:var(--muted)">Accessory</span></div>
+          <div class="item" data-slot="shoes"><span style="color:var(--muted)">Shoes</span></div>
+        </div>
+        <div style="display:flex;gap:10px;margin-top:12px">
+          <button id="saveOutfit">Save Outfit ❤</button>
+          <button id="randomizeOne">Randomize One</button>
+          <button id="clearOutfit">Clear</button>
+        </div>
+        <hr>
+        <h4>Saved Outfits</h4>
+        <div id="favorites" class="favorites"></div>
+      </section>
+    </div>
+  </main>
+
+  <footer>© 2025 Outfitly — Designed for modern style lovers.</footer>
+
+  <script>
+    const STORAGE_KEY = 'outfitly_wardrobe';
+    const OUTFIT_KEY = 'outfitly_outfits';
+    function loadWardrobe(){ try{ return JSON.parse(localStorage.getItem(STORAGE_KEY)) || {top:[],bottom:[],accessory:[],shoes:[]}; }catch(e){ return {top:[],bottom:[],accessory:[],shoes:[]}; } }
+    function saveWardrobe(w){ localStorage.setItem(STORAGE_KEY, JSON.stringify(w)); }
+    function loadOutfits(){ try{ return JSON.parse(localStorage.getItem(OUTFIT_KEY)) || []; }catch(e){ return []; } }
+    function saveOutfits(a){ localStorage.setItem(OUTFIT_KEY, JSON.stringify(a)); }
+
+    const gallery=document.getElementById('gallery');
+    const categorySelect=document.getElementById('categorySelect');
+    const fileInput=document.getElementById('fileInput');
+    const addBtn=document.getElementById('addBtn');
+    const preview=document.getElementById('preview');
+    const generateBtn=document.getElementById('generateBtn');
+    const saveOutfitBtn=document.getElementById('saveOutfit');
+    const favoritesEl=document.getElementById('favorites');
+    const randomizeOneBtn=document.getElementById('randomizeOne');
+    const clearOutfitBtn=document.getElementById('clearOutfit');
+
+    let wardrobe=loadWardrobe();
+    let outfits=loadOutfits();
+    let activeTab='all';
+
+    function renderGallery(){
+      gallery.innerHTML='';
+      const items=[];
+      if(activeTab==='all'){ Object.keys(wardrobe).forEach(cat=>wardrobe[cat].forEach(it=>items.push({...it,cat}))) }
+      else { wardrobe[activeTab].forEach(it=>items.push({...it,cat:activeTab})) }
+      if(items.length===0){ gallery.innerHTML='<div style="grid-column:1/-1;color:var(--muted);padding:12px">No items yet — add some photos.</div>'; return }
+      items.forEach(item=>{
+        const card=document.createElement('div'); card.className='card';
+        const img=document.createElement('img'); img.src=item.data; card.appendChild(img);
+        const meta=document.createElement('div'); meta.className='meta';
+        const useBtn=document.createElement('div'); useBtn.className='icon'; useBtn.innerText='Use'; useBtn.onclick=()=>useInPreview(item);
+        const delBtn=document.createElement('div'); delBtn.className='icon'; delBtn.innerText='Del'; delBtn.onclick=()=>{if(confirm('Delete this item?')) removeItem(item)};
+        meta.appendChild(useBtn); meta.appendChild(delBtn); card.appendChild(meta); gallery.appendChild(card);
+      });
+    }
+
+    function useInPreview(item){
+      const slot=preview.querySelector(`[data-slot="${item.cat}"]`);
+      if(!slot) return;
+      slot.innerHTML='';
+      const img=document.createElement('img');
+      img.src=item.data;
+      img.style.maxWidth='100%'; img.style.maxHeight='100%'; img.style.objectFit='contain';
+      slot.appendChild(img);
+      slot.dataset.itemId=item.id;
+    }
+
+    function removeItem(item){ wardrobe[item.cat]=wardrobe[item.cat].filter(x=>x.id!==item.id); saveWardrobe(wardrobe); renderGallery(); }
+    function addItem(cat,dataUrl){ const id=Date.now().toString(36)+Math.random().toString(36).slice(2,6); const item={id,name:cat+'-'+id,data:dataUrl}; wardrobe[cat].push(item); saveWardrobe(wardrobe); renderGallery(); }
+
+    addBtn.onclick=()=>{ const file=fileInput.files[0]; const cat=categorySelect.value; if(!file){alert('Choose an image file first');return} const reader=new FileReader(); reader.onload=e=>addItem(cat,e.target.result); reader.readAsDataURL(file); fileInput.value=''; }
+    document.querySelectorAll('.tab').forEach(t=>t.addEventListener('click',()=>{document.querySelectorAll('.tab').forEach(x=>x.classList.remove('active'));t.classList.add('active');activeTab=t.dataset.cat;renderGallery();}));
+
+    function getRandomFrom(arr){if(!arr||arr.length===0)return null;return arr[Math.floor(Math.random()*arr.length)];}
+    function generateOutfit(){['top','bottom','accessory','shoes'].forEach(slot=>{const choice=getRandomFrom(wardrobe[slot]);if(choice)useInPreview({...choice,cat:slot});});}
+    generateBtn.onclick=generateOutfit;
+
+    function readPreview(){const entries={};preview.querySelectorAll('[data-slot]').forEach(slot=>{const s=slot.dataset.slot;const child=slot.querySelector('img');if(child)entries[s]=child.src;});return entries;}
+    function renderFavorites(){favoritesEl.innerHTML='';outfits.forEach((o,idx)=>{const chip=document.createElement('div');chip.className='fav-chip';chip.innerText=`Outfit ${idx+1}`;chip.onclick=()=>{['top','bottom','accessory','shoes'].forEach(slot=>{const el=preview.querySelector(`[data-slot="${slot}"]`);el.innerHTML='';if(o[slot]){const img=document.createElement('img');img.src=o[slot];img.style.maxWidth='100%';img.style.maxHeight='100%';img.style.objectFit='contain';el.appendChild(img);}})};const del=document.createElement('span');del.innerText=' ✕';del.style.marginLeft='8px';del.style.cursor='pointer';del.onclick=(e)=>{e.stopPropagation();if(confirm('Remove saved outfit?')){outfits.splice(idx,1);saveOutfits(outfits);renderFavorites();}};chip.appendChild(del);favoritesEl.appendChild(chip);});}
+    saveOutfitBtn.onclick=()=>{const data=readPreview();if(Object.keys(data).length===0){alert('Preview is empty — generate or add items.');return}outfits.unshift(data);if(outfits.length>20)outfits.pop();saveOutfits(outfits);renderFavorites();}
+    randomizeOneBtn.onclick=()=>{const slots=['top','bottom','accessory','shoes'];const slot=slots[Math.floor(Math.random()*slots.length)];const choice=getRandomFrom(wardrobe[slot]);if(choice)useInPreview({...choice,cat:slot});}
+    clearOutfitBtn.onclick=()=>{preview.querySelectorAll('[data-slot]').forEach(s=>s.innerHTML=`<span style="color:var(--muted)">${s.dataset.slot.charAt(0).toUpperCase()+s.dataset.slot.slice(1)}</span>`);}
+    renderGallery();renderFavorites();
+  </script>
+</body>
+</html>
+
+
+
+    

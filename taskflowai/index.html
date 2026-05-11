@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>TaskFlow AI</title>
+  <link rel="stylesheet" href="style.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+  <div class="container">
+
+    <div class="top-bar">
+      <div>
+        <h1>TaskFlow AI</h1>
+        <p>Smart Productivity Hub</p>
+      </div>
+
+      <button id="themeBtn">🌙</button>
+    </div>
+    <div class="stats-box">
+      <div>
+        <h3 id="totalTasks">0</h3>
+        <span>Total</span>
+      </div>
+
+      <div>
+        <h3 id="completedTasks">0</h3>
+        <span>Completed</span>
+      </div>
+
+      <div>
+        <h3 id="pendingTasks">0</h3>
+        <span>Pending</span>
+      </div>
+    </div>
+
+    <div class="progress-container">
+      <div class="progress-bar" id="progressBar"></div>
+    </div>
+
+    <div class="task-input-box">
+      <input type="text" id="taskInput" placeholder="Add a new task...">
+
+      <select id="category">
+        <option>Study</option>
+        <option>Work</option>
+        <option>Personal</option>
+      </select>
+      <select id="priority">
+        <option value="Low">Low</option>
+        <option value="Medium">Medium</option>
+        <option value="High">High</option>
+      </select>
+
+      <input type="date" id="dueDate">
+
+      <button onclick="addTask()">Add</button>
+    </div>
+
+    <div class="controls">
+      <input type="text" id="searchInput" placeholder="Search tasks...">
+
+      <select id="filterTasks">
+        <option value="all">All</option>
+        <option value="completed">Completed</option>
+        <option value="pending">Pending</option>
+      </select>
+    </div>
+
+    <ul id="taskList"></ul>
+
+  </div>
+
+<script src="script.js"></script>
+</body>
+</html>
